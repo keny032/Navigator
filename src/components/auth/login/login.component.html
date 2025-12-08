@@ -1,0 +1,49 @@
+
+<div class="flex items-center justify-center min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h1 class="text-center text-3xl font-extrabold" style="color: #0047BA;">Navigator Birokratije</h1>
+      <h2 class="mt-2 text-center text-xl font-bold text-gray-800">
+        Prijavite se na Vaš račun
+      </h2>
+    </div>
+    <form class="mt-8 space-y-6" (ngSubmit)="login()" #loginForm="ngForm">
+      <div class="rounded-md shadow-sm -space-y-px">
+        <div>
+          <label for="email-address" class="sr-only">Email adresa</label>
+          <input id="email-address" name="email" type="email" autocomplete="email" required
+                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                 placeholder="Email adresa" [ngModel]="email()" (ngModelChange)="email.set($event)">
+        </div>
+        <div>
+          <label for="password" class="sr-only">Lozinka</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required
+                 class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                 placeholder="Lozinka" [ngModel]="password()" (ngModelChange)="password.set($event)">
+        </div>
+      </div>
+
+      @if (error()) {
+        <div class="text-red-600 text-sm p-2 bg-red-100 rounded-md">
+          {{ error() }}
+        </div>
+      }
+
+      <div>
+        <button type="submit" [disabled]="isLoading()"
+                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white disabled:bg-blue-300" style="background-color: #0047BA; hover:background-color: #003a9a;">
+          @if (isLoading()) {
+            <span class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></span>
+          } @else {
+            Prijavi se
+          }
+        </button>
+      </div>
+    </form>
+    <div class="text-sm text-center">
+      <a routerLink="/register" class="font-medium text-blue-600 hover:text-blue-500">
+        Nemate račun? Registrujte se
+      </a>
+    </div>
+  </div>
+</div>

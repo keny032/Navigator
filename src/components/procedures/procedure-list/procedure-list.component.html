@@ -1,0 +1,51 @@
+
+<div class="bg-surface min-h-full">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8 text-center">
+      <h1 class="text-3xl font-bold text-gray-900">Sve Procedure</h1>
+      <p class="mt-2 text-md text-gray-600">Pronađite informacije o svim administrativnim procedurama na jednom mjestu.</p>
+    </div>
+
+    <div class="mb-6 flex flex-wrap justify-center gap-2">
+      <button 
+        (click)="selectCategory('all')"
+        [class]="selectedCategory() === 'all' ? 'bg-blue-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+        class="px-4 py-2 text-sm font-medium rounded-full shadow-sm transition-colors">
+        Sve kategorije
+      </button>
+      @for (category of categories; track category) {
+        <button 
+          (click)="selectCategory(category)"
+          [class]="selectedCategory() === category ? 'bg-blue-700 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+          class="px-4 py-2 text-sm font-medium rounded-full shadow-sm transition-colors">
+          {{ category }}
+        </button>
+      }
+    </div>
+
+    @if (procedures().length === 0) {
+      <app-loader></app-loader>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (procedure of filteredProcedures(); track procedure.id) {
+          <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden">
+            <div class="p-6">
+              <span class="inline-block bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">{{ procedure.category }}</span>
+              <h2 class="mt-2 text-xl font-bold text-gray-800">{{ procedure.title }}</h2>
+              <p class="mt-2 text-gray-600 text-sm line-clamp-3">{{ procedure.description }}</p>
+            </div>
+            <div class="px-6 py-4 bg-gray-50">
+              <a [routerLink]="['/procedures', procedure.id]" class="font-medium text-blue-600 hover:text-blue-800">
+                Pogledaj detalje &rarr;
+              </a>
+            </div>
+          </div>
+        } @empty {
+          <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+            <p class="text-gray-500">Nema procedura u ovoj kategoriji.</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
